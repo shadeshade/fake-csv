@@ -8,6 +8,7 @@ authors = ["Abdul Magomedov <privetabdul@gmail.com>"]
 python = "^3.8"
 Django = "^3.2.6"
 python-dotenv = "^0.19.0"
+Faker = "^8.11.0"
 
 [tool.poetry.dev-dependencies]
 
