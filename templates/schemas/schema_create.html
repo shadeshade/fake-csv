@@ -1,0 +1,16 @@
+{% extends 'wrapper.html' %}
+
+{% block title %}
+New Schema
+{% endblock %}
+
+{% block content %}
+    <h1>New Schema</h1>
+    <form method=post>
+        {% csrf_token %}
+      <dl>
+        {{ form.as_p }}
+      </dl>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}
