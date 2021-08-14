@@ -3,8 +3,10 @@ SEM = 'semicolon'
 TAB = 'tab'
 SPC = 'space'
 PIPE = 'pipe'
+
 DBL = 'double-quote'
 SNGL = 'single-quote'
+
 NAME = 'full_name'
 JOB = 'job'
 EMAIL = 'email'

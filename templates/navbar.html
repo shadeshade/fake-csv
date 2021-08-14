@@ -1,6 +1,6 @@
 <nav class="nav">
     <a class="nav-link active" aria-current="page" href="#">FakeCSV</a>
-    <a class="nav-link" href="{% url 'schemas:schema_list' %}">Add Schema</a>
+    <a class="nav-link" href="{% url 'schemas:schema_create' %}">Add Schema</a>
     {% if user.is_authenticated %}
     <a class="nav-link" href="#">{{user.username}}</a>
     <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
