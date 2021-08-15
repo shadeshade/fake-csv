@@ -7,10 +7,10 @@ New Schema
 
 {% block content %}
     <h1>New Schema</h1>
-    <form method=post>
+    <form id="form-container" method="POST">
 
-        {{ schema_form.management_form }}
         {% csrf_token %}
+        {{ column_form.management_form }}
         <table>
                 {{ schema_form }}
         </table>
@@ -18,16 +18,14 @@ New Schema
         <button class="btn btn-primary" type="submit">Submit</button>
 
         <h1>Schema columns</h1>
-        <table id="items">
-            {{ column_form.management_form }}
-            {{ column_form }}
-        </table>
+            {% for form in column_form %}
+                <table class="column-form">
+                    {{ form }}
+                </table>
+            {% endfor %}
         <button class="btn btn-primary" id="add-column" type="button">Add column</button>
     </form>
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/add_fields.js' %}"></script>
-    <script src="{% static 'js/change_fields.js' %}"></script>
-
-
+    <script src="{% static 'js/formset.js' %}"></script>
 {% endblock %}
