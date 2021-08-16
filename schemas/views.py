@@ -8,10 +8,20 @@ from .forms import SchemaForm, ColumnUpdateFormSet, ColumnCreateFormSet
 from .models import Schema, Column
 
 
-class SchemaListView(ListView):
+class SchemaListView(LoginRequiredMixin, ListView):
     model = Schema
     template_name = 'schemas/schema_list.html'
-    paginate_by = 25
+    paginate_by = 15
+    ordering = '-pk'
+
+    def get_queryset(self):
+        self.queryset = super().get_queryset().filter(added_by=self.request.user)
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)  # this calls self.get_queryset() which assigns self.form
+        context['object_list'] = self.queryset
+        return context
 
 
 class SchemaCreateView(LoginRequiredMixin, CreateView):
@@ -66,7 +76,7 @@ class SchemaUpdateView(UserPassesTestMixin, UpdateView):
             try:
                 with transaction.atomic():
                     schema_form.save()
-
+                    # delete all columns related to the schema and add new columns
                     Column.objects.filter(schema=self.object).delete()
 
                     for form in column_form:
@@ -86,7 +96,7 @@ class SchemaUpdateView(UserPassesTestMixin, UpdateView):
 class SchemaDeleteView(UserPassesTestMixin, DeleteView):
     model = Schema
     template_name = 'delete_confirm.html'
-    success_url = reverse_lazy('schema_list')
+    success_url = reverse_lazy('schemas:schema_list')
 
     def test_func(self):
         schema = self.get_object()

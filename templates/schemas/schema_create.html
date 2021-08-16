@@ -6,26 +6,26 @@ New Schema
 {% endblock %}
 
 {% block content %}
-    <h1>New Schema</h1>
-    <form id="form-container" method="POST">
+<h1>New Schema</h1>
+<form id="form-container" method="POST">
 
-        {% csrf_token %}
-        {{ column_form.management_form }}
-        <table>
-                {{ schema_form }}
-        </table>
+    {% csrf_token %}
+    {{ column_form.management_form }}
+    <table>
+            {{ schema_form }}
+    </table>
 
-        <button class="btn btn-primary" type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
 
-        <h1>Schema columns</h1>
-            {% for form in column_form %}
-                <table class="column-form">
-                    {{ form }}
-                </table>
-            {% endfor %}
-        <button class="btn btn-primary" id="add-column" type="button">Add column</button>
-    </form>
+    <h1>Schema columns</h1>
+        {% for form in column_form %}
+            <table class="column-form">
+                {{ form }}
+            </table>
+        {% endfor %}
+    <button class="btn btn-primary" id="add-column" type="button">Add column</button>
+</form>
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/formset.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/formset.js' %}"></script>
 {% endblock %}

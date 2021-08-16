@@ -61,7 +61,7 @@ $(`#id_${`form-${formNum}-`}type`).change(function () {
 });
 
 $('body').on('click','#delete',function (e){
-    $(this).parent('table').remove();
+    $(this).parent().remove();
 });
 
 }

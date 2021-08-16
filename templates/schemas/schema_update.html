@@ -1,0 +1,34 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+{% block title %}
+{{object.name}}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="content-title">Schema Update Page</h1>
+
+<form method="post">
+        {% csrf_token %}
+        {{ column_form.management_form }}
+        <table>
+                {{ schema_form }}
+        </table>
+
+        {% for form in column_form %}
+
+            <table class="column-form">
+                {{ form }}
+            </table>
+
+        {% endfor %}
+
+
+
+        <button class="btn btn-danger" type="submit">Confirm</button>
+        <a class="btn btn-primary" href="{% url 'schemas:schema_list' %}">Cancel</a>
+</form>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/formset-update.js' %}"></script>
+{% endblock %}

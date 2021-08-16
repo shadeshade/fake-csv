@@ -12,12 +12,18 @@ class Schema(models.Model):
     string_character = models.CharField(
         max_length=50, choices=choices.QUOTATION_CHARACTERS, default=choices.DBL)
 
+    def __str__(self):
+        return f'{self.pk} - {self.name}'
+
 
 class Column(models.Model):
-    column_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     type = models.CharField(max_length=50, choices=choices.TYPES)
     range_from = models.PositiveIntegerField(blank=True, null=True)
     range_to = models.PositiveIntegerField(blank=True, null=True)
     quantity = models.PositiveIntegerField(blank=True, null=True)
     order = models.PositiveIntegerField(blank=False, null=False)
-    schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
+    schema = models.ForeignKey(Schema, related_name='columns', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.pk} - {self.name}'

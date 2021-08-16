@@ -1,0 +1,14 @@
+{% extends "wrapper.html" %}
+{% block title %}
+{{object.name}}
+{% endblock %}
+
+{% block content %}
+    <h1 class="content-title">Delete Page</h1>
+    <h2>Are you sure you want to delete {{object.name}}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit">Confirm</button>
+        <a class="btn btn-primary" href="{% url 'schemas:schema' object.id %}">Cancel</a>
+    </form>
+{% endblock %}

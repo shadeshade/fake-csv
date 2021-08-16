@@ -1,8 +1,9 @@
-from django.forms import ModelForm, formset_factory
+from django.forms import ModelForm, formset_factory, modelformset_factory
+
 from .models import Schema, Column
 
 
-class SchemaCreateForm(ModelForm):
+class SchemaForm(ModelForm):
     class Meta:
         model = Schema
 
@@ -13,12 +14,11 @@ class SchemaCreateForm(ModelForm):
         ]
 
 
-class ColumnCreateForm(ModelForm):
+class ColumnForm(ModelForm):
     class Meta:
         model = Column
-
         fields = [
-            'column_name',
+            'name',
             'type',
             'range_from',
             'range_to',
@@ -27,4 +27,7 @@ class ColumnCreateForm(ModelForm):
         ]
 
 
-ColumnCreateFormSet = formset_factory(ColumnCreateForm, max_num=9)
+# we want to have 1 extra row to make it easier to create schemas
+ColumnCreateFormSet = modelformset_factory(Column, ColumnForm, extra=1)
+# we want to have 0 extra row for update page
+ColumnUpdateFormSet = modelformset_factory(Column, ColumnForm, extra=0)

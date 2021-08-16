@@ -1,0 +1,13 @@
+{% extends "wrapper.html" %}
+
+{% block title %}
+{{object.name}}
+{% endblock %}
+
+{% block content %}
+<h1 class="content-title">Schema Page</h1>
+    <p>Schema: {{object.name}}</p>
+        {% for column in object.columns.all %}
+            <p>{{ column.name }}</p>
+        {% endfor %}
+{% endblock %}

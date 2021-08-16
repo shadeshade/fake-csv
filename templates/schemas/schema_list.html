@@ -1,13 +1,18 @@
 {% extends "wrapper.html" %}
 
 {% block title %}
-Main page
+Data Schemas
 {% endblock %}
 
 {% block content %}
-<h1>Schemas</h1>
+<h1>Data schemas</h1>
+<a class="nav-link" href="{% url 'schemas:schema_create' %}">Add Schema</a>
 
 {% for object in object_list %}
     <p>{{object}}
+    {% if object.added_by == user %}
+    <p><a href="{% url 'schemas:schema_update' object.id%}">Update</a></p>
+    <p><a href="{% url 'schemas:schema_delete' object.id%}">Delete</a></p>
+    {% endif %}
 {% endfor %}
 {% endblock %}
