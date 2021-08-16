@@ -1,7 +1,8 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import SchemaListView, SchemaCreateView, SchemaDetailView, SchemaUpdateView, SchemaDeleteView
+from .views import SchemaListView, SchemaCreateView, SchemaDetailView, SchemaUpdateView, SchemaDeleteView, \
+    SchemaDataSetsListView
 
 app_name = 'schemas'
 
@@ -11,6 +12,7 @@ urlpatterns = [
     path('<int:pk>', SchemaDetailView.as_view(), name='schema'),
     path('update/<int:pk>/', SchemaUpdateView.as_view(), name='schema_update'),
     path('delete/<int:pk>/', SchemaDeleteView.as_view(), name='schema_delete'),
+    path('data-sets/<int:pk>/', SchemaDataSetsListView.as_view(), name='schema_data_sets_list'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

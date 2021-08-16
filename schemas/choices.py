@@ -1,12 +1,4 @@
-COM = 'comma'
-SEM = 'semicolon'
-TAB = 'tab'
-SPC = 'space'
-PIPE = 'pipe'
-
-DBL = 'double-quote'
-SNGL = 'single-quote'
-
+# types for model Column
 NAME = 'full_name'
 JOB = 'job'
 EMAIL = 'email'
@@ -31,6 +23,13 @@ TYPES = (
     (DATE, 'Date')
 )
 
+# column separators for model Schema
+COM = 'comma'
+SEM = 'semicolon'
+TAB = 'tab'
+SPC = 'space'
+PIPE = 'pipe'
+
 SEPARATORS = (
     (COM, 'Comma (,)'),
     (SEM, 'Semicolon (;)'),
@@ -39,7 +38,22 @@ SEPARATORS = (
     (PIPE, 'Pipe (|)')
 )
 
+# string characters for model Schema
+DBL = 'double-quote'
+SNGL = 'single-quote'
+
 QUOTATION_CHARACTERS = (
     (DBL, 'Double-quote (")'),
     (SNGL, 'Single-quote (\')'),
+)
+
+# status for model Job
+PROCESSING = 0
+READY = 1
+ERROR = 2
+
+JOB_STATUS = (
+    (PROCESSING, 'Processing'),
+    (READY, 'Ready'),
+    (ERROR, 'Error')
 )
