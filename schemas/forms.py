@@ -1,5 +1,6 @@
-from django.forms import ModelForm, formset_factory, modelformset_factory
+from django.forms import ModelForm, modelformset_factory, Form, IntegerField, ChoiceField, Textarea
 
+from .choices import NAME
 from .models import Schema, Column
 
 
@@ -17,6 +18,7 @@ class SchemaForm(ModelForm):
 class ColumnForm(ModelForm):
     class Meta:
         model = Column
+
         fields = [
             'name',
             'type',

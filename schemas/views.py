@@ -5,10 +5,10 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from .forms import SchemaForm, ColumnUpdateFormSet, ColumnCreateFormSet
-from .models import Schema, Column
+from .models import Schema, Column, Job
 
 
-class SchemaListView(LoginRequiredMixin, ListView):
+class SchemaListView(LoginRequiredMixin, ListView):     # todo: add pagination
     model = Schema
     template_name = 'schemas/schema_list.html'
     paginate_by = 15
@@ -60,7 +60,7 @@ class SchemaDetailView(DetailView):
 class SchemaUpdateView(UserPassesTestMixin, UpdateView):
     model = Schema
     template_name = 'schemas/schema_update.html'
-    fields = ['name', 'column_separator', 'string_character', ]
+    fields = ['name', 'column_separator', 'string_character', ]  # todo: check
 
     def get_context_data(self, **kwargs):
         kwargs['schema_form'] = SchemaForm(instance=self.object)
@@ -102,3 +102,34 @@ class SchemaDeleteView(UserPassesTestMixin, DeleteView):
         schema = self.get_object()
         user = self.request.user
         return schema.added_by == user or user.is_staff
+
+
+class JobCreateView(UserPassesTestMixin, CreateView):     # todo: add pagination
+    model = Job
+    template_name = 'schemas/job_create.html'
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        return super().post(request, *args, **kwargs)
+
+    def get_queryset(self):
+        self.queryset = super().get_queryset().filter(schema=self.kwargs['pk'])
+        return self.queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = self.queryset
+        return context
+
+    def test_func(self):
+        schema = Schema.objects.get(pk=self.kwargs['pk'])   #todo:?
+        user = self.request.user
+        return schema.added_by == user or user.is_staff
+
+
+
+
+
+
+

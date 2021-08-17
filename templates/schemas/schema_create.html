@@ -7,7 +7,7 @@ New Schema
 
 {% block content %}
 <h1>New Schema</h1>
-<form id="form-container" method="POST">
+<form id="form-container" method="post">
 
     {% csrf_token %}
     {{ column_form.management_form }}

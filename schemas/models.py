@@ -35,6 +35,9 @@ class Column(models.Model):
 
 class Job(models.Model):
     created = models.DateTimeField(null=False, default=timezone.now, editable=False)
-    status = models.PositiveSmallIntegerField(choices=JOB_STATUS, default=JOB_STATUS.PROCESSING)
-    arguments = models.JSONField()
+    status = models.PositiveSmallIntegerField(choices=JOB_STATUS, default=choices.PROCESSING)
+    schema = models.ForeignKey(Schema, related_name='jobs', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.pk
 
