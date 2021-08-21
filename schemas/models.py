@@ -10,11 +10,22 @@ class Schema(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     column_separator = models.CharField(
-        max_length=50, choices=choices.SEPARATORS, default=choices.COM)
+        max_length=50,
+        choices=choices.SEPARATORS,
+        default=choices.COM
+    )
     string_character = models.CharField(
-        max_length=50, choices=choices.QUOTATION_CHARACTERS, default=choices.DBL)
+        max_length=50,
+        choices=choices.QUOTATION_CHARACTERS,
+        default=choices.DBL
+    )
     created = models.DateTimeField(null=False, default=timezone.now, editable=False)
     modified = models.DateTimeField(null=False, default=timezone.now, editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self._state.adding:
+            self.modified = timezone.now()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.pk} - {self.name}'
@@ -26,7 +37,7 @@ class Column(models.Model):
     range_from = models.PositiveIntegerField(blank=True, null=True)
     range_to = models.PositiveIntegerField(blank=True, null=True)
     quantity = models.PositiveIntegerField(blank=True, null=True)
-    order = models.PositiveIntegerField(blank=False, null=False)
+    order = models.PositiveIntegerField()
     schema = models.ForeignKey(Schema, related_name='columns', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -34,10 +45,10 @@ class Column(models.Model):
 
 
 class Job(models.Model):
-    created = models.DateTimeField(null=False, default=timezone.now, editable=False)
-    status = models.PositiveSmallIntegerField(choices=JOB_STATUS, default=choices.PROCESSING)
-    schema = models.ForeignKey(Schema, related_name='jobs', on_delete=models.CASCADE)
+    created = models.DateTimeField(default=timezone.now, editable=False)
+    status = models.CharField(max_length=50, choices=JOB_STATUS, default=choices.PROCESSING)
+    error = models.CharField(max_length=255, blank=True, null=True)
+    payload = models.JSONField(default=dict)
 
     def __str__(self):
-        return self.pk
-
+        return f'job: {self.pk}'
