@@ -24,23 +24,25 @@ TYPES = (
 )
 
 # column separators for model Schema
-COM = 'comma'
-SEM = 'semicolon'
-TAB = 'tab'
-SPC = 'space'
-PIPE = 'pipe'
+COM = ','
+SEM = ';'
+TAB = '\t'
+SPC = ' '
+DASH = '-'
+PIPE = '|'
 
 SEPARATORS = (
     (COM, 'Comma (,)'),
     (SEM, 'Semicolon (;)'),
     (TAB, 'Tab (\\t)'),
     (SPC, 'Space ( )'),
-    (PIPE, 'Pipe (|)')
+    (DASH, 'Dash (-)'),
+    (PIPE, 'Pipes (|)')
 )
 
 # string characters for model Schema
-DBL = 'double-quote'
-SNGL = 'single-quote'
+DBL = '"'
+SNGL = "'"
 
 QUOTATION_CHARACTERS = (
     (DBL, 'Double-quote (")'),
@@ -48,9 +50,9 @@ QUOTATION_CHARACTERS = (
 )
 
 # status for model Job
-PROCESSING = 0
-READY = 1
-ERROR = 2
+PROCESSING = "PROCESSING"
+READY = "READY"
+ERROR = "ERROR"
 
 JOB_STATUS = (
     (PROCESSING, 'Processing'),

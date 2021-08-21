@@ -9,7 +9,7 @@ Data Schemas
 <a class="nav-link" href="{% url 'schemas:schema_create' %}">Add Schema</a>
 
 {% for object in object_list %}
-    <p><a href="{% url 'schemas:job_create' object.id%}">{{object}}</a></p>
+    <p><a href="{% url 'schemas:data_set' object.id%}">{{object}}</a></p>
     {% if object.added_by == user %}
 
     <p><a class="btn btn-primary" href="{% url 'schemas:schema_update' object.id%}">Update</a></p>

@@ -1,0 +1,54 @@
+{% extends "wrapper.html" %}
+{% load static %}
+
+{% block title %}
+Data sets
+{% endblock %}
+
+{% block content %}
+
+
+
+<form id="form-container" method="post">
+
+        {% csrf_token %}
+
+        {{ row_form }}
+
+        <button class="btn btn-primary" id="start_job" type="submit">Generate</button>
+
+</form>
+
+<h1 class="content-title">Data sets</h1>
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>Created</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+    {% for object in object_list %}
+        <tr>
+            <td><span class="mycount"></span></td>
+            <td>{{object.created|date}}</td>
+            <td>{{object.status}}</td>
+            <td>
+                {% if object.status == "READY" %}
+                    <a href="{% url 'schemas:data_set_download' job_pk=object.pk %}" type="button">Download</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+
+    </table>
+<style type="text/css">
+body {
+    counter-reset: mycount;           /* Set the counter to 0 */
+}
+.mycount:before{
+    counter-increment: mycount;      /* Increment the counter */
+    content: counter(mycount) ". "; /* Display the counter */
+}
+</style>
+{% endblock %}

@@ -1,7 +1,6 @@
-from django.forms import ModelForm, modelformset_factory, Form, IntegerField, ChoiceField, Textarea
+from django.forms import ModelForm, modelformset_factory, Form, IntegerField, ValidationError, CharField, TextInput
 
-from .choices import NAME
-from .models import Schema, Column
+from .models import Schema, Column, Job
 
 
 class SchemaForm(ModelForm):
@@ -27,6 +26,16 @@ class ColumnForm(ModelForm):
             'quantity',
             'order',
         ]
+
+
+class JobCreateForm(Form):
+    rows = IntegerField(label='Rows', )
+
+    def clean_rows(self):
+        data = self.cleaned_data['rows']
+        if not data > 0:
+            raise ValidationError("Should be greater then 0")
+        return data
 
 
 # we want to have 1 extra row to make it easier to create schemas
