@@ -8,7 +8,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
-from django.views.generic.detail import BaseDetailView
 
 from .forms import SchemaForm, ColumnUpdateFormSet, ColumnCreateFormSet, JobCreateForm
 from .models import Schema, Column, Job

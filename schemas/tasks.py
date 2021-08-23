@@ -69,7 +69,7 @@ def create_csv_file(job_id: int):
                 fieldnames=column_names,
                 delimiter=column_separator,
                 quotechar=string_character,
-                quoting=csv.QUOTE_NONNUMERIC
+                quoting=csv.QUOTE_ALL
             )
             writer.writeheader()
             for i in range(record_count):
