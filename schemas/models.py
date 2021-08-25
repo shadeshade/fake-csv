@@ -8,7 +8,7 @@ from .choices import JOB_STATUS
 
 class Schema(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     column_separator = models.CharField(
         max_length=50,
         choices=choices.SEPARATORS,

@@ -9,6 +9,6 @@
     <form method="post">
         {% csrf_token %}
         <button class="btn btn-danger" type="submit">Confirm</button>
-        <a class="btn btn-primary" href="{% url 'schemas:schema_detail' object.id %}">Cancel</a>
+        <a class="btn btn-primary" href="{% url 'schemas:schema_list' %}">Cancel</a>
     </form>
 {% endblock %}

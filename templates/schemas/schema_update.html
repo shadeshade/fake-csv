@@ -9,9 +9,18 @@
 
 <h1 class="content-title">Schema Update Page</h1>
 
+{% for message in messages %}
+
+    <div class="alert alert-danger">
+           {{ message }}
+    </div>
+
+{% endfor %}
+
 <form id="form-container" method="post">
         {% csrf_token %}
         {{ column_form.management_form }}
+
         <table>
                 {{ schema_form }}
         </table>
@@ -21,13 +30,12 @@
             <table class="column-form">
                 {{ form }}
             </table>
-        {% endfor %}
 
+        {% endfor %}
 
         <button class="btn btn-danger" type="submit">Confirm</button>
         <a class="btn btn-primary" href="{% url 'schemas:schema_list' %}">Cancel</a>
         <button class="btn btn-primary" id="add-column" type="button">Add column</button>
-
 </form>
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

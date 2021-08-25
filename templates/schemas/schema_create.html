@@ -7,10 +7,19 @@ New Schema
 
 {% block content %}
 <h1>New Schema</h1>
-<form id="form-container" method="post">
 
+{% for message in messages %}
+
+    <div class="alert alert-danger">
+           {{ message }}
+    </div>
+
+{% endfor %}
+
+<form id="form-container" method="post">
     {% csrf_token %}
     {{ column_form.management_form }}
+
     <table>
             {{ schema_form }}
     </table>
@@ -18,11 +27,15 @@ New Schema
     <button class="btn btn-primary" type="submit">Submit</button>
 
     <h1>Schema columns</h1>
-        {% for form in column_form %}
-            <table class="column-form">
-                {{ form }}
-            </table>
-        {% endfor %}
+
+                {% for form in column_form %}
+
+                    <table class="column-form">
+                        {{ form }}
+                    </table>
+
+                {% endfor %}
+
     <button class="btn btn-primary" id="add-column" type="button">Add column</button>
 </form>
 

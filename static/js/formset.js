@@ -2,7 +2,6 @@ let initialFormsLength = document.querySelectorAll(".column-form").length
 let columnForm = document.querySelectorAll(".column-form")
 let container = document.querySelector("#form-container")
 let addButton = document.querySelector("#add-column")
-let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
 let formNum = columnForm.length-1
 
 
@@ -12,9 +11,9 @@ for(var i = 0; i < initialFormsLength; i++) {
     initialForm.innerHTML = initialForm.innerHTML + '<input type="button" value="delete" id="delete" />'
     container.insertBefore(initialForm, addButton)
 
-//    $('body').on('click','#delete',function (e){
-//        $(this).parent().remove();
-//    });
+    $('body').on('click','#delete',function (e){
+        $(this).parent().remove();
+    });
 
 }
 
@@ -56,8 +55,6 @@ function addForm(e){
     formNum++
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
     container.insertBefore(newForm, addButton)
-
-    totalForms.setAttribute('value', `${formNum+1}`)
 
     let conditional_field_range_from = $(`#id_${`form-${formNum}-`}range_from`);
     let conditional_field_range_to = $(`#id_${`form-${formNum}-`}range_to`);
