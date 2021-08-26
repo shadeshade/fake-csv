@@ -18,23 +18,29 @@ New Schema
 
 <form id="form-container" method="post">
     {% csrf_token %}
+    {{ column_form.non_field_errors }}
     {{ column_form.management_form }}
 
     <table>
-            {{ schema_form }}
+        {{ schema_form }}
     </table>
 
     <button class="btn btn-primary" type="submit">Submit</button>
 
     <h1>Schema columns</h1>
 
-                {% for form in column_form %}
+        {% for form in column_form %}
 
-                    <table class="column-form">
-                        {{ form }}
-                    </table>
+            <div class="column-form">
+                {% for field in form %}
+
+                    <span class="error_list">{{ field.errors|striptags }}</span>
+                    {{ field.label_tag }} {{ field }}
 
                 {% endfor %}
+            </div>
+
+        {% endfor %}
 
     <button class="btn btn-primary" id="add-column" type="button">Add column</button>
 </form>

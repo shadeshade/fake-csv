@@ -5,7 +5,6 @@ from .models import Schema, Column
 
 
 class SchemaForm(forms.ModelForm):
-
     class Meta:
         model = Schema
 
@@ -17,7 +16,6 @@ class SchemaForm(forms.ModelForm):
 
 
 class ColumnForm(forms.ModelForm):
-
     class Meta:
         model = Column
 
@@ -74,9 +72,17 @@ class ColumnForm(forms.ModelForm):
 
             return range_to
 
+    def clean_order(self):
+        order = self.cleaned_data.get('order')
+        order_list = [v for k, v in self.data.items() if k.endswith('order')]
+
+        if len(order_list) > len(set(order_list)):  # check if order items are unique
+            raise forms.ValidationError("Invalid order")
+
+        return order
+
 
 class JobCreateForm(forms.Form):
-
     rows = forms.IntegerField(label='Rows', error_messages={'required': 'This field is required'})
 
     def clean_rows(self):

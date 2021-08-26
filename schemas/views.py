@@ -5,10 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.db import transaction, IntegrityError
 from django.http import HttpResponse, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
 from .forms import SchemaForm, ColumnUpdateFormSet, ColumnCreateFormSet, JobCreateForm
 from .models import Schema, Column, Job
@@ -36,17 +36,14 @@ class SchemaCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         kwargs['schema_form'] = SchemaForm()
-        kwargs['column_form'] = ColumnCreateFormSet(queryset=Column.objects.none())
+        kwargs['column_form'] = ColumnCreateFormSet(queryset=Column.objects.none())  # Create an instance of the formset
         return kwargs
 
     def post(self, request, *args, **kwargs):
         schema_form = SchemaForm(request.POST)
         column_form = ColumnCreateFormSet(parse_column_form_data(request.POST))
 
-        try:
-           if len(column_form) == 0:
-               raise Exception
-        except Exception:
+        if column_form.data['form-TOTAL_FORMS'] == 0:
             messages.error(request, 'Columns should be provided')
         else:
             if schema_form.is_valid() and column_form.is_valid():  # Check if submitted forms are valid
@@ -70,12 +67,7 @@ class SchemaCreateView(LoginRequiredMixin, CreateView):
             'schema_form': schema_form,
             'column_form': column_form,
         }
-        return render(request, template_name=self.template_name, context=context)
-
-
-class SchemaDetailView(DetailView):
-    model = Schema
-    template_name = 'schemas/schema_detail.html'
+        return self.render_to_response(context)
 
 
 class SchemaUpdateView(UserPassesTestMixin, UpdateView):
@@ -93,10 +85,7 @@ class SchemaUpdateView(UserPassesTestMixin, UpdateView):
         schema_form = SchemaForm(instance=self.object, data=request.POST)
         column_form = ColumnUpdateFormSet(parse_column_form_data(request.POST))
 
-        try:
-            if len(column_form) == 0:
-                raise Exception
-        except Exception:
+        if column_form.data['form-TOTAL_FORMS'] == 0:
             messages.error(request, 'Columns should be provided')
         else:
             if schema_form.is_valid() and column_form.is_valid():  # Check if submitted forms are valid
@@ -119,12 +108,12 @@ class SchemaUpdateView(UserPassesTestMixin, UpdateView):
             'schema_form': schema_form,
             'column_form': column_form,
         }
-        return render(request, template_name=self.template_name, context=context)
+        return self.render_to_response(context)
 
-    def test_func(self):
+    def test_func(self):  # check if schema's owner tries to update the schema
         schema = self.get_object()
         user = self.request.user
-        return schema.added_by == user or user.is_staff
+        return schema.added_by == user
 
 
 class SchemaDeleteView(UserPassesTestMixin, DeleteView):
@@ -132,7 +121,7 @@ class SchemaDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'schemas/delete_confirm.html'
     success_url = reverse_lazy('schemas:schema_list')
 
-    def test_func(self):
+    def test_func(self):  # check if a staff user or schema's owner tries to delete the schema
         schema = self.get_object()
         user = self.request.user
         return schema.added_by == user or user.is_staff
@@ -167,7 +156,7 @@ class DatasetView(UserPassesTestMixin, CreateView, ListView):
 
 
 class DownloadView(UserPassesTestMixin, View):
-    def get(self, request,  *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         file_name = f"fake-schema-{self.kwargs['job_pk']}.csv"
         file_path = os.path.join(settings.MEDIA_ROOT, file_name)
         if os.path.exists(file_path):
@@ -177,11 +166,8 @@ class DownloadView(UserPassesTestMixin, View):
                 return response
         raise Http404
 
-    def test_func(self):
+    def test_func(self):  # check if the current user is schema's owner
         job = Job.objects.get(pk=self.kwargs['job_pk'])
         schema = Schema.objects.get(pk=job.payload["schema_id"])
         user = self.request.user
         return schema.added_by == user or user.is_staff
-
-
-

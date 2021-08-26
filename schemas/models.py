@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from django.utils import timezone
+
 from . import choices
 from .choices import JOB_STATUS
 
@@ -23,7 +23,7 @@ class Schema(models.Model):
     modified = models.DateTimeField(null=False, default=timezone.now, editable=False)
 
     def save(self, *args, **kwargs):
-        if not self._state.adding:
+        if not self._state.adding:  # update field modified if the model was edited
             self.modified = timezone.now()
         super().save(*args, **kwargs)
 
