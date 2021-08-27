@@ -17,27 +17,23 @@ services:
 
   celery:
     build: .
-    env_file:
-      - .env
     volumes:
       - ./:/usr/src/app
     command: celery -A config.celery:app worker -l info
     depends_on:
       - db
       - redis
-      - app
+#      - app
 
-  app:
-    build: .
-    command: sh /usr/src/app/entrypoint.sh
-    env_file:
-      - .env
-    volumes:
-      - ./:/usr/src/app
-    depends_on:
-      - db
-    ports:
-      - 8000:8000
+#  app:
+#    build: .
+#    command: sh /usr/src/app/entrypoint.sh
+#    volumes:
+#      - ./:/usr/src/app
+#    depends_on:
+#      - db
+#    ports:
+#      - 8000:8000
 
 volumes:
   db_data:
