@@ -56,9 +56,9 @@ def get_csv_file_name(job_id: int):
     return f'fake-schema-{job_id}.csv'
 
 
-def get_csv_url(file):
+def get_csv_url(file_path):
     headers = {'Content-Type': 'text/csv'}
-    data = open(file, 'rb')
+    data = open(file_path, 'rb')
     response = requests.post(
         "https://www.filestackapi.com/api/store/S3?key=AF461if9MSSm6DxNwihfZz",
         headers=headers,
@@ -95,7 +95,7 @@ def create_csv_file(job_id: int):
                     fake_row_dict
                 )
 
-            new_filelink = get_csv_url(csvfile)
+            new_filelink = get_csv_url(file_path)
 
     except Exception as error:
         job.status = choices.ERROR
