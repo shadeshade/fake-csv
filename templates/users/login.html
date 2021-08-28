@@ -6,9 +6,9 @@ Login Page
 
 
 {% block content %}
-    <h1 class="content-title">Login Page</h1>
+    <h1 class="content-title">Login</h1>
     <form method=post>
-        {% csrf_token %}
+      {% csrf_token %}
       {% for field in form %}
           <div>
                 {{ field }}

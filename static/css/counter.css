@@ -1,0 +1,7 @@
+body {
+    counter-reset: mycount;           /* Set the counter to 0 */
+}
+.mycount:before{
+    counter-increment: mycount;      /* Increment the counter */
+    content: counter(mycount) ". "; /* Display the counter */
+}

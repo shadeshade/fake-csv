@@ -1,4 +1,5 @@
 {% extends "wrapper.html" %}
+{% load static %}
 
 {% block title %}
 Data Schemas
@@ -6,14 +7,29 @@ Data Schemas
 
 {% block content %}
 <h1>Data schemas</h1>
-<a class="nav-link" href="{% url 'schemas:schema_create' %}">Add Schema</a>
+<a class="nav-link" href="{% url 'schemas:schema_create' %}">New schema</a>
+<table border="1">
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Modified</th>
+        <th>Actions</th>
+    </tr>
 
-{% for object in object_list %}
-    <p><a href="{% url 'schemas:data_set' object.id%}">{{object}}</a></p>
-    {% if object.added_by == user %}
+    {% for object in object_list %}
+    <tr>
+        <td><span class="mycount"></span></td>
+        <td><a href="{% url 'schemas:data_set' object.id%}">{{object.name}}</a></td>
+        <td>{{object.modified|date}}</td>
+        <td>
+            {% if object.added_by == user %}
+                <a href="{% url 'schemas:schema_update' object.id%}">Update</a>
+                <a href="{% url 'schemas:schema_delete' object.id%}">Delete</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
-    <p><a class="btn btn-primary" href="{% url 'schemas:schema_update' object.id%}">Update</a></p>
-    <p><a class="btn btn-primary" href="{% url 'schemas:schema_delete' object.id%}">Delete</a></p>
-    {% endif %}
-{% endfor %}
+<link rel="stylesheet" href="{% static 'css/counter.css' %}">
 {% endblock %}
