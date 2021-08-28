@@ -1,2 +1,2 @@
 web: gunicorn config.wsgi
-worker: celery -A config worker -l info -B
+worker: python manage.py celery worker --beat
