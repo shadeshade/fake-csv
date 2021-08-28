@@ -155,19 +155,19 @@ class DatasetView(UserPassesTestMixin, CreateView, ListView):
         return schema.added_by == user or user.is_staff
 
 
-class DownloadView(UserPassesTestMixin, View):
-    def get(self, request, *args, **kwargs):
-        file_name = f"fake-schema-{self.kwargs['job_pk']}.csv"
-        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
-        if os.path.exists(file_path):
-            with open(file_path, 'rb') as fh:
-                response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-                response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-                return response
-        raise Http404
-
-    def test_func(self):  # check if the current user is schema's owner
-        job = Job.objects.get(pk=self.kwargs['job_pk'])
-        schema = Schema.objects.get(pk=job.payload["schema_id"])
-        user = self.request.user
-        return schema.added_by == user or user.is_staff
+# class DownloadView(UserPassesTestMixin, View):
+#     def get(self, request, *args, **kwargs):
+#         file_name = f"fake-schema-{self.kwargs['job_pk']}.csv"
+#         file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+#         if os.path.exists(file_path):
+#             with open(file_path, 'rb') as fh:
+#                 response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+#                 response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+#                 return response
+#         raise Http404
+#
+#     def test_func(self):  # check if the current user is schema's owner
+#         job = Job.objects.get(pk=self.kwargs['job_pk'])
+#         schema = Schema.objects.get(pk=job.payload["schema_id"])
+#         user = self.request.user
+#         return schema.added_by == user or user.is_staff

@@ -8,6 +8,9 @@ from config.celery import app
 from schemas.models import Job
 from . import choices
 
+from filestack import Client
+
+client = Client(os.getenv('FILESTACK_API_KEY'))
 fake = Faker()
 
 # generate fake data
@@ -56,13 +59,14 @@ def get_csv_file_name(job_id: int):
 def create_csv_file(job_id: int):
     job = Job.objects.get(id=job_id)
     file_name = get_csv_file_name(job_id)
+    file_path = os.path.join(settings.MEDIA_ROOT, file_name)
     column_dict = job.payload["column_dict"]
     record_count = job.payload["record_count"]
     column_separator = job.payload["column_separator"]
     string_character = job.payload["string_character"]
 
     try:
-        with open(os.path.join(settings.MEDIA_ROOT, file_name), 'w', newline='') as csvfile:
+        with open(file_path, 'w', newline='') as csvfile:
             column_names = [value['name'] for value in column_dict.values()]
             writer = csv.DictWriter(
                 csvfile,
@@ -77,11 +81,17 @@ def create_csv_file(job_id: int):
                 writer.writerow(
                     fake_row_dict
                 )
+        new_filelink = client.upload(filepath=file_path)
+
     except Exception as error:
         job.status = choices.ERROR
         job.error = str(error)
         raise
     else:
+        job.url = new_filelink.url
         job.status = choices.READY
     finally:
         job.save()
+
+
+

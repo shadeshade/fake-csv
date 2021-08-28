@@ -48,6 +48,7 @@ class Job(models.Model):
     created = models.DateTimeField(default=timezone.now, editable=False)
     status = models.CharField(max_length=50, choices=JOB_STATUS, default=choices.PROCESSING)
     error = models.CharField(max_length=255, blank=True, null=True)
+    url = models.URLField(max_length=200, null=True)
     payload = models.JSONField(default=dict)
 
     def __str__(self):
