@@ -1,2 +1,2 @@
 web: gunicorn config.wsgi
-worker: celery worker -A config -l info -c 4
+worker: celery -A config worker -l info -B
