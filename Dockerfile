@@ -13,7 +13,7 @@ COPY ./poetry.lock ./
 RUN poetry install --no-interaction --no-ansi
 RUN python manage.py collectstatic --noinput
 
-#COPY ./entrypoint.sh .
-#RUN ["chmod", "+x", "/usr/src/app/entrypoint.sh"]
+COPY ./entrypoint.sh .
+RUN ["chmod", "+x", "/usr/src/app/entrypoint.sh"]
 
 COPY . .
