@@ -221,6 +221,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "dj-database-url"
+version = "0.5.0"
+description = "Use Database URLs in your Django Application."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django"
 version = "3.2.6"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
@@ -236,6 +244,20 @@ sqlparse = ">=0.2.2"
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
+
+[[package]]
+name = "django-heroku"
+version = "0.3.1"
+description = "This is a Django library for Heroku apps."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+dj-database-url = ">=0.5.0"
+django = "*"
+psycopg2 = "*"
+whitenoise = "*"
 
 [[package]]
 name = "docker"
@@ -609,7 +631,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "8f1c1299ba5fb1a1b52796624ff81818c4f1082c41b1dc1b2e9ad4f61ac7c32c"
+content-hash = "d4861d311e7c12ec84d53d12bff8bb2043a0d1006ba9e3bf579a48c5048ed3fc"
 
 [metadata.files]
 amqp = [
@@ -735,9 +757,17 @@ distro = [
     {file = "distro-1.6.0-py2.py3-none-any.whl", hash = "sha256:c8713330ab31a034623a9515663ed87696700b55f04556b97c39cd261aa70dc7"},
     {file = "distro-1.6.0.tar.gz", hash = "sha256:83f5e5a09f9c5f68f60173de572930effbcc0287bb84fdc4426cb4168c088424"},
 ]
+dj-database-url = [
+    {file = "dj-database-url-0.5.0.tar.gz", hash = "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163"},
+    {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
+]
 django = [
     {file = "Django-3.2.6-py3-none-any.whl", hash = "sha256:7f92413529aa0e291f3be78ab19be31aefb1e1c9a52cd59e130f505f27a51f13"},
     {file = "Django-3.2.6.tar.gz", hash = "sha256:f27f8544c9d4c383bbe007c57e3235918e258364577373d4920e9162837be022"},
+]
+django-heroku = [
+    {file = "django-heroku-0.3.1.tar.gz", hash = "sha256:6af4bc3ae4a9b55eaad6dbe5164918982d2762661aebc9f83d9fa49f6009514e"},
+    {file = "django_heroku-0.3.1-py2.py3-none-any.whl", hash = "sha256:2bc690aab89eedbe01311752320a9a12e7548e3b0ed102681acc5736a41a4762"},
 ]
 docker = [
     {file = "docker-5.0.0-py2.py3-none-any.whl", hash = "sha256:fc961d622160e8021c10d1bcabc388c57d55fb1f917175afbe24af442e6879bd"},
