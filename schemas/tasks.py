@@ -1,6 +1,7 @@
 import csv
 import os
 
+import requests
 from django.conf import settings
 from faker import Faker
 
@@ -55,6 +56,18 @@ def get_csv_file_name(job_id: int):
     return f'fake-schema-{job_id}.csv'
 
 
+def get_csv_url(file):
+    headers = {'Content-Type': 'text/csv'}
+    data = open(file, 'rb')
+    response = requests.post(
+        "https://www.filestackapi.com/api/store/S3?key=AF461if9MSSm6DxNwihfZz",
+        headers=headers,
+        data=data
+    )
+    response = response.content.decode().split('"')[3]
+    return response
+
+
 @app.task
 def create_csv_file(job_id: int):
     job = Job.objects.get(id=job_id)
@@ -81,14 +94,15 @@ def create_csv_file(job_id: int):
                 writer.writerow(
                     fake_row_dict
                 )
-        new_filelink = client.upload(filepath=file_path)
+
+            new_filelink = get_csv_url(csvfile)
 
     except Exception as error:
         job.status = choices.ERROR
         job.error = str(error)
         raise
     else:
-        job.url = new_filelink.url
+        job.url = new_filelink
         job.status = choices.READY
     finally:
         job.save()
