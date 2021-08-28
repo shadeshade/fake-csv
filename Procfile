@@ -1,2 +1,2 @@
 web: gunicorn config.wsgi
-worker: python manage.py celery worker --beat
+worker: celery -A config.celery worker -B --loglevel=info
