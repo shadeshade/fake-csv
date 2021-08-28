@@ -35,7 +35,6 @@ Data sets
         <td>{{object.status}}</td>
         <td>
             {% if object.status == "READY" %}
-<!--                <a href="{% url 'schemas:data_set_download' job_pk=object.pk %}" type="button">Download</a>-->
                 <a href="{{ object.url }}" type="button">Download</a>
             {% endif %}
         </td>
