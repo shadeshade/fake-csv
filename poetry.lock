@@ -331,18 +331,6 @@ python-dateutil = ">=2.4"
 text-unidecode = "1.3"
 
 [[package]]
-name = "filestack-python"
-version = "3.4.0"
-description = "Filestack Python SDK"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-requests = "2.25.1"
-trafaret = "2.0.2"
-
-[[package]]
 name = "gunicorn"
 version = "20.1.0"
 description = "WSGI HTTP Server for UNIX"
@@ -587,18 +575,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "trafaret"
-version = "2.0.2"
-description = "Validation and parsing library"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-objectid = ["pymongo (>=2.4.1)"]
-rfc3339 = ["python-dateutil (>=1.5)"]
-
-[[package]]
 name = "urllib3"
 version = "1.26.6"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -652,7 +628,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "3622aef0b55c48d1e7524e9a9f8ccb3bedc1711d13913123b4beebce1d6b736b"
+content-hash = "d4861d311e7c12ec84d53d12bff8bb2043a0d1006ba9e3bf579a48c5048ed3fc"
 
 [metadata.files]
 amqp = [
@@ -807,10 +783,6 @@ docopt = [
 faker = [
     {file = "Faker-8.11.0-py3-none-any.whl", hash = "sha256:3e737576ff50cd98dfed643d6b3fd63194eca9df00e7f595960fe7da5220723d"},
     {file = "Faker-8.11.0.tar.gz", hash = "sha256:b9e81e9da3dda3ac54189e034cfb943de576a259caeb226ccab43fcbcf6a7891"},
-]
-filestack-python = [
-    {file = "filestack-python-3.4.0.tar.gz", hash = "sha256:ed379c558f61f01ace1772ebeab45b5cb629c815397094773253ba4b451c0769"},
-    {file = "filestack_python-3.4.0-py3-none-any.whl", hash = "sha256:55b50a48b98ca9ce736ccc82ab07a7f990e0ebda27aa0954a704d52ce22c90fe"},
 ]
 gunicorn = [
     {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
@@ -974,10 +946,6 @@ text-unidecode = [
 texttable = [
     {file = "texttable-1.6.4-py2.py3-none-any.whl", hash = "sha256:dd2b0eaebb2a9e167d1cefedab4700e5dcbdb076114eed30b58b97ed6b37d6f2"},
     {file = "texttable-1.6.4.tar.gz", hash = "sha256:42ee7b9e15f7b225747c3fa08f43c5d6c83bc899f80ff9bae9319334824076e9"},
-]
-trafaret = [
-    {file = "trafaret-2.0.2-py3-none-any.whl", hash = "sha256:5d560577cb7f5ec015cdb9298e46ec07fd9e0224bc0aaecc7d0fa0e92ea251d9"},
-    {file = "trafaret-2.0.2.tar.gz", hash = "sha256:61dfc25b574f70bfdf7ee3a808ec423061811c13a10b8d3c9e11ab539b96ab65"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.6-py2.py3-none-any.whl", hash = "sha256:39fb8672126159acb139a7718dd10806104dec1e2f0f6c88aab05d17df10c8d4"},

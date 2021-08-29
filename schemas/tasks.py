@@ -9,9 +9,6 @@ from config.celery import app
 from schemas.models import Job
 from . import choices
 
-from filestack import Client
-
-client = Client(os.getenv('FILESTACK_API_KEY'))
 fake = Faker()
 
 # generate fake data
@@ -56,7 +53,7 @@ def get_csv_file_name(job_id: int):
     return f'fake-schema-{job_id}.csv'
 
 
-def get_csv_url(file_path):
+def get_csv_file_url(file_path):
     headers = {'Content-Type': 'text/csv'}
     data = open(file_path, 'rb')
     response = requests.post(
@@ -95,7 +92,7 @@ def create_csv_file(job_id: int):
                     fake_row_dict
                 )
 
-            new_filelink = get_csv_url(file_path)
+            new_filelink = get_csv_file_url(writer)
 
     except Exception as error:
         job.status = choices.ERROR
