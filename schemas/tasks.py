@@ -6,6 +6,7 @@ from django.conf import settings
 from faker import Faker
 
 from config.celery import app
+from config.settings import FILESTACK_API_KEY, FILESTACK_API_URL
 from schemas.models import Job
 from . import choices
 
@@ -53,15 +54,21 @@ def get_csv_file_name(job_id: int):
     return f'fake-schema-{job_id}.csv'
 
 
-def get_csv_file_url(file_path):
+def upload_file_to_storage(file_path: str):
+    """
+    Upload a file to the cloud storage and get the download url
+    :param file_path: path to file we are uploading
+    :return: file url
+    """
     headers = {'Content-Type': 'text/csv'}
     data = open(file_path, 'rb')
     response = requests.post(
-        "https://www.filestackapi.com/api/store/S3?key=AF461if9MSSm6DxNwihfZz",
+        f"{FILESTACK_API_URL}?key={FILESTACK_API_KEY}",
         headers=headers,
         data=data
     )
-    response = response.content.decode().split('"')[3]
+    response.raise_for_status()
+    response = response.json()['url']
     return response
 
 
@@ -92,17 +99,14 @@ def create_csv_file(job_id: int):
                     fake_row_dict
                 )
 
-        new_filelink = get_csv_file_url(file_path)
+        new_filelink = upload_file_to_storage(file_path)
 
     except Exception as error:
         job.status = choices.ERROR
         job.error = str(error)
         raise
     else:
-        job.url = new_filelink
+        job.file_url = new_filelink
         job.status = choices.READY
     finally:
         job.save()
-
-
-

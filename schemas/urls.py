@@ -8,7 +8,6 @@ from .views import (
     SchemaUpdateView,
     SchemaDeleteView,
     DatasetView,
-    # DownloadView
 )
 
 app_name = 'schemas'
@@ -19,7 +18,6 @@ urlpatterns = [
     path('<int:pk>/update/', SchemaUpdateView.as_view(), name='schema_update'),
     path('<int:pk>/delete/', SchemaDeleteView.as_view(), name='schema_delete'),
     path('<int:schema_pk>/data-sets/', DatasetView.as_view(), name='data_set'),
-    # path('data-sets/<int:job_pk>/download/', DownloadView.as_view(), name='data_set_download'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

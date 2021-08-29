@@ -160,4 +160,7 @@ LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/users/login/'
 
+FILESTACK_API_KEY = os.getenv('FILESTACK_API_KEY')
+FILESTACK_API_URL = os.getenv('FILESTACK_API_URL')
+
 django_heroku.settings(locals())
