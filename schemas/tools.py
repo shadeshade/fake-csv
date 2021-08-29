@@ -1,8 +1,7 @@
 import collections
 
-from .tasks import create_csv_file
-
 from .models import Job, Schema
+from .tasks import create_csv_file
 
 
 def get_column_dict(schema: Schema):  # return an ordered dict with columns' info

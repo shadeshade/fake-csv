@@ -1,13 +1,8 @@
-import os
-
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.db import transaction, IntegrityError
-from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 
 from .forms import SchemaForm, ColumnUpdateFormSet, ColumnCreateFormSet, JobCreateForm
@@ -153,7 +148,6 @@ class DatasetView(UserPassesTestMixin, CreateView, ListView):
         schema = Schema.objects.get(pk=self.kwargs['schema_pk'])
         user = self.request.user
         return schema.added_by == user or user.is_staff
-
 
 # class DownloadView(UserPassesTestMixin, View):
 #     def get(self, request, *args, **kwargs):
