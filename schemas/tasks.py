@@ -92,7 +92,7 @@ def create_csv_file(job_id: int):
                     fake_row_dict
                 )
 
-            new_filelink = get_csv_file_url(writer)
+        new_filelink = get_csv_file_url(file_path)
 
     except Exception as error:
         job.status = choices.ERROR
